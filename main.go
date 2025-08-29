@@ -1,8 +1,6 @@
 package main
 
 import (
-	"crypto/sha256"
-	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -17,6 +15,5 @@ func main() {
 		fmt.Fprintln(os.Stderr, "snapshot error:", err)
 		os.Exit(1)
 	}
-	sum := sha256.Sum256(b)
-	fmt.Println(hex.EncodeToString(sum[:]))
+	fmt.Println(b)
 }
