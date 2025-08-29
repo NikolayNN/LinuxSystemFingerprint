@@ -1,6 +1,8 @@
 package main
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -10,10 +12,11 @@ import (
 
 func main() {
 	snap := fingerprint.GetSnapshot()
-	enc := json.NewEncoder(os.Stdout)
-	enc.SetIndent("", "  ")
-	if err := enc.Encode(snap); err != nil {
-		fmt.Fprintln(os.Stderr, "encode error:", err)
+	b, err := json.Marshal(snap)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "snapshot error:", err)
 		os.Exit(1)
 	}
+	sum := sha256.Sum256(b)
+	fmt.Println(hex.EncodeToString(sum[:]))
 }
